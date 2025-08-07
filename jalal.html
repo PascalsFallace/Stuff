@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jalal Humphries</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ96jI0U06l1a65xL2c5qEwK5jB6f2rJq+y1yFm4y4F9y7Bq1w4s4ZJ3wzE5Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 bg-gray-900">
+
+    <!-- Main Card Container -->
+    <div class="bg-gray-800 rounded-3xl shadow-2xl p-8 max-w-sm w-full text-center transform transition-all duration-300 hover:scale-105">
+
+        <!-- Profile Picture and Details -->
+        <!-- USER EDIT: Replace the placeholder image URL with your own profile picture -->
+        <img id="profile-photo" class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-gray-700 shadow-md transition-transform duration-300 hover:scale-110" 
+             src="https://github.com/PascalsFallace/Stuff/blob/main/jalal.jpg" alt="Profile Photo" />
+
+        <!-- USER EDIT: Change the text below to your details -->
+        <h1 id="user-name" class="text-3xl font-bold text-white mb-1">Jalal Humphries</h1>
+
+        <!-- Contact Links Section -->
+        <div class="space-y-4 mb-6 mt-6">
+            <!-- USER EDIT: Update the href and text for your contact information -->
+            <a id="email-link" href="mailto:jalal.humphries@gmail.com" class="block w-full bg-blue-500 text-white py-3 px-6 rounded-full font-bold shadow-md hover:bg-blue-600 transition-colors duration-300 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-envelope"></i>
+                <span>jalal.humphries@gmail.com</span>
+            </a>
+            <!-- USER EDIT: Update the href with your WhatsApp number -->
+            <a id="whatsapp-link" href="https://wa.me/+61487725034" target="_blank" class="block w-full bg-green-600 text-white py-3 px-6 rounded-full font-bold shadow-md hover:bg-green-700 transition-colors duration-300 flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>+61 487 725 034</span>
+            </a>
+        </div>
+
+        <!-- Save Contact Button -->
+        <button id="save-contact-btn" class="w-full bg-purple-600 text-white py-3 px-6 rounded-full font-bold shadow-lg hover:bg-purple-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+            Save Contact
+        </button>
+
+        <p class="mt-4 text-xs text-gray-400">
+            This page is a static file. To share it, simply use its URL.
+        </p>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get user details from the HTML elements
+            const userName = document.getElementById('user-name').innerText;
+            const email = document.getElementById('email-link').href.replace('mailto:', '');
+            // USER EDIT: Make sure this phone number matches the one in your WhatsApp link
+            const phone = "+61487725034";
+
+            // Handle the "Save Contact" button click
+            document.getElementById('save-contact-btn').addEventListener('click', () => {
+                // Create a vCard string
+                const vCardContent = `BEGIN:VCARD
+VERSION:3.0
+N:${userName}
+FN:${userName}
+TEL;TYPE=CELL:${phone}
+EMAIL:${email}
+END:VCARD`;
+
+                // Create a Blob from the vCard content
+                const blob = new Blob([vCardContent], { type: 'text/vcard' });
+                const url = URL.createObjectURL(blob);
+
+                // Create a temporary link element to trigger the download
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${userName.replace(' ', '_')}.vcf`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            });
+        });
+    </script>
+</body>
+</html>
